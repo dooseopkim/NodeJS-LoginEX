@@ -1,0 +1,4 @@
+node_modules/
+config/db.json
+config/google.json
+config/facebook.json

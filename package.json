@@ -1,0 +1,35 @@
+{
+  "name": "nodejs-loginex",
+  "version": "1.0.0",
+  "description": "Login service using NodeJS, Express, Pug, Passport\r Init",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dooseopkim/NodeJS-LoginEX.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.4",
+    "directory-tree": "^2.2.2",
+    "express": "^4.16.4",
+    "express-session": "^1.16.1",
+    "mysql": "^2.17.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "sanitize-html": "^1.20.0",
+    "session-file-store": "^1.2.0",
+    "shortid": "^2.2.14"
+  },
+  "bugs": {
+    "url": "https://github.com/dooseopkim/NodeJS-LoginEX/issues"
+  },
+  "homepage": "https://github.com/dooseopkim/NodeJS-LoginEX#readme"
+}
