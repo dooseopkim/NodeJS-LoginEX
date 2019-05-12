@@ -5,6 +5,7 @@ block nav
     include includes/nav.pug
 block contents
     case content
+        when 'signin': +_signinPage()
         when 'login': +_loginPage()
         default: +_defaultPage()
 block footer

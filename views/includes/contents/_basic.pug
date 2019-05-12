@@ -1,1 +1,6 @@
-h1 Hello Pug! You so cute
+.container.d-flex.flex-column.justify-content-around.align-items-center.c-content-area
+    if isLogined
+        +__userInfo(JSON.parse(loginParams))
+    else
+        h1 Not login
+        a(href='/user/login') login

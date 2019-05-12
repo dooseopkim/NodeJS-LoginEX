@@ -1,4 +1,13 @@
+mixin _signinPage()
+    include includes/contents/_signin.pug
 mixin _loginPage()
     include includes/contents/_login.pug
 mixin _defaultPage()
     include includes/contents/_basic.pug
+mixin __userInfo(user)
+    h2 로그인 정보
+    p 아이디 : !{user.id}
+    p 비밀번호 : !{user.password}
+    p 이메일 : !{user.email}
+    p 별칭 : !{user.nickname}
+    a(href="/user/logout") 로그아웃

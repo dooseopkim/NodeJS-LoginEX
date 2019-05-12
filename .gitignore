@@ -4,3 +4,4 @@ config/google.json
 config/facebook.json
 public/javascripts/boot*
 public/stylesheets/boot*
+session/*

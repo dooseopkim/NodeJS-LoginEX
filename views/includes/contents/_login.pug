@@ -1,9 +1,10 @@
 .container.d-flex.flex-column.justify-content-around.align-items-center.c-content-area
-  form.border.border-dark.rounded.p-5(action='/user/login')
+  form.border.border-dark.rounded.p-5(action='/user/login',method='POST')
     h2 LogIn
     label(for='userEmail') Email
     input#userEmail.form-control(type='text' name='userEmail' placeholder='Email..' required='')
-    label(for='userPassword') Password
+    label.mt-2(for='userPassword') Password
     input#userPassword.form-control(type='text' name='userPassword' placeholder='Password..' required='')
     button.btn.btn-outline-success.w-100.mt-2(type='submit') LogIn
+    a.mt-1(href="/user/signin") New Account
   

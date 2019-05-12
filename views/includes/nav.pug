@@ -10,5 +10,9 @@
             a.nav-link(href='#')
               | Home 
               span.sr-only (current)
-          li.nav-item
-            a.nav-link(href='/user/login') LogIn
+          if isLogined
+            li.nav-item
+              a.nav-link(href='/user/logout') Logout
+          else
+            li.nav-item
+              a.nav-link(href='/user/login') LogIn
