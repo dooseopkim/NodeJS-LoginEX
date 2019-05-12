@@ -1,0 +1,9 @@
+.container.d-flex.flex-column.justify-content-around.align-items-center.c-content-area
+  form.border.border-dark.rounded.p-5(action='/user/login')
+    h2 LogIn
+    label(for='userEmail') Email
+    input#userEmail.form-control(type='text' name='userEmail' placeholder='Email..' required='')
+    label(for='userPassword') Password
+    input#userPassword.form-control(type='text' name='userPassword' placeholder='Password..' required='')
+    button.btn.btn-outline-success.w-100.mt-2(type='submit') LogIn
+  
