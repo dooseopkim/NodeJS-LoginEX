@@ -1,7 +1,6 @@
 node_modules/
-config/db.json
-config/google.json
-config/facebook.json
+config/_*
 public/javascripts/boot*
+public/javascripts/jquery.min.js
 public/stylesheets/boot*
 sessions/

@@ -94,15 +94,18 @@ loginForm
       a.btn.btn-outline-info.w-100(href='/user/auth/google') Login with Google
 
 ```
-<div class="panel panel-warning">
-**Warning**
-{: .panel-heading}
-<div class="panel-body">
-
-WARNING DESCRIPTION
-
-</div>
-</div>
+로그인 Form안에 input태그의 name속성을 보면 'userEmail', 'userPassword'로 되어있다.  
+passport가 제공하는 form에서의 Default name속성이 'username', 'password' 이므로  
+이 값들을 일치시켜줘야한다.  
+하단에 보이는 `new LocalStrategy()` 에 첫번째 인자로 
+```
+{
+  usernameField: "userEmail",
+  passwordField: "userPassword"
+}
+```
+객체를 추가해주자  
+&nbsp;  
 
 ```javascript
 /* 
@@ -133,9 +136,11 @@ passport.use(
     )
   );
 ```
+4.2 GoogleStrategy  
+&nbsp;  dev사이트 : https://console.developers.google.com  
+&nbsp;  Passport Docs : http://www.passportjs.org/docs/google/
+&nbsp;  
 
-<style>
-.alert-danger {
-  color: rgb(169,68,66) !important;
-}
-</style>
+4.3 GithubStrategy  
+&nbsp;  dev사이트 : https://github.com/settings/developers  
+&nbsp;  Passport Docs : http://www.passportjs.org/packages/passport-github2/
