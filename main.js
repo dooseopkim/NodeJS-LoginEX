@@ -47,10 +47,4 @@ app.use(function(err, req, res, next) {
 app.use(function(req, res, next) {
   res.status(404).send("Sorry cant find that!");
 });
-// app.get("/", function(req, res, next) {
-//   res.render("common", { content: "login", dummy: "qwerty" });
-// });
-// app.get("/user/signin", function(req, res, next) {
-//   res.render("common", { content: "signin", dummy: "qwerty" });
-// });
-app.listen(3002);
+app.listen(3000);

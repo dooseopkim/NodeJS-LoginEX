@@ -45,5 +45,22 @@ module.exports = function(passport) {
       res.redirect("/user/login");
     });
   });
+  /** Google 로그인 */
+  router.get(
+    "/auth/google",
+    passport.authenticate("google", {
+      scope: ["https://www.googleapis.com/auth/plus.login", "email"]
+    })
+  );
+
+  router.get(
+    "/auth/google/callback",
+    passport.authenticate("google", {
+      successRedirect: "/",
+      successFlash: true,
+      failureRedirect: "/user/login",
+      failureFlash: true
+    })
+  );
   return router;
 };

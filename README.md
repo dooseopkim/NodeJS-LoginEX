@@ -22,6 +22,8 @@ Login service using NodeJS, Express, Pug, Passport
   }
 ```
 `npm install`  
+&nbsp;  
+
 3 Directory Tree  
 ```sh
 │  main.js
@@ -67,4 +69,73 @@ Login service using NodeJS, Express, Pug, Passport
         └─contents
                 _login.pug
                 _mypage.pug
+```  
+&nbsp;  
+4 Passport Strategy 추가
+***
+4.1 LocalStrategy  
+&nbsp;  
+loginForm
+```javascript
+/* 
+  ./views/includes/contents/_login.pug
+  - LocalStrategy
+*/
+.container.d-flex.flex-column.justify-content-around.align-items-center.c-content-area
+  form.border.border-dark.rounded.p-5(action='/user/login',method='POST')
+    h2 LogIn
+    label(for='userEmail') Email
+    input#userEmail.form-control(type='text' name='userEmail' placeholder='Email..' required='')
+    label.mt-2(for='userPassword') Password
+    input#userPassword.form-control(type='text' name='userPassword' placeholder='Password..' required='')
+    button.btn.btn-outline-success.w-100.mt-2(type='submit') LogIn
+    a.mt-1(href='/user/signin') New Account
+    .row
+      a.btn.btn-outline-info.w-100(href='/user/auth/google') Login with Google
+
 ```
+<div class="panel panel-warning">
+**Warning**
+{: .panel-heading}
+<div class="panel-body">
+
+WARNING DESCRIPTION
+
+</div>
+</div>
+
+```javascript
+/* 
+  ./lib/strategies.js 
+  - LocalStrategy
+*/
+passport.use(
+    new LocalStrategy(
+      {
+        usernameField: "userEmail",
+        passwordField: "userPassword"
+      },
+      function(username, password, done) {
+        db.query(queries.USER_SELECT_ONE_FOR_LOGIN, [username], function(err, result) {
+          if (err) throw err;
+          var user = result[0];
+          if (user) {
+            if (bcrypt.compareSync(password, user.password)) {
+              return done(null, user, { message: "Login Success" });
+            } else {
+              return done(null, false, { message: "Incorrect password." });
+            }
+          } else {
+            return done(null, false, { message: "Incorrect username." });
+          }
+        });
+      }
+    )
+  );
+```
+
+<style>
+.alert-danger {
+  color: rgb(169,68,66) !important;
+}
+</style>

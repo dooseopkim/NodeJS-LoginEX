@@ -6,5 +6,6 @@
     label.mt-2(for='userPassword') Password
     input#userPassword.form-control(type='text' name='userPassword' placeholder='Password..' required='')
     button.btn.btn-outline-success.w-100.mt-2(type='submit') LogIn
-    a.mt-1(href="/user/signin") New Account
-  
+    a.mt-1(href='/user/signin') New Account
+    .row
+      a.btn.btn-outline-info.w-100(href='/user/auth/google') Login with Google
