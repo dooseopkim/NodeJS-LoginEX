@@ -36,9 +36,11 @@ var passport = require("./lib/strategies")(app);
 
 var indexRouter = require("./routes/index");
 var userRouter = require("./routes/user")(passport);
+var signinRouter = require("./routes/signin");
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
+app.use("/signin", signinRouter);
 
 app.use(function(err, req, res, next) {
   console.error(err.stack);

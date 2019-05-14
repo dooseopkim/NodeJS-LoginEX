@@ -143,4 +143,21 @@ passport.use(
 
 4.3 GithubStrategy  
 &nbsp;  dev사이트 : https://github.com/settings/developers  
-&nbsp;  Passport Docs : http://www.passportjs.org/packages/passport-github2/
+&nbsp;  Passport Docs : http://www.passportjs.org/packages/passport-github2/  
+깃헙 계정의 가입된 email이 아니라 profile상에 email이 등록되어있어야  
+email값이 읽혀진다. (그렇지 않다면 email은 null값)  
+&nbsp;  
+***
+## TodoList
+### LocalStrategy
+- [x] 회원가입 (Create)
+- [x] 회원정보조회 (Read)
+- [ ] 회원정보수정 (Update)
+- [ ] 회원정보삭제 (Delete)
+&nbsp;  
+### Validation of signup page
+- [ ] 이메일중복
+- [x] 비밀번호유효성1 (비밀번호 두 번 입력확인)
+- [ ] 비밀번호유효성2 (8자 이상 문자+숫자)
+- [ ] 닉네임중복
+

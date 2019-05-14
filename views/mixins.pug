@@ -12,3 +12,8 @@ mixin __userInfo(user)
     p 별칭 : !{user.nickname}
     p GoogleID : !{user.googleid}
     a(href="/user/logout") 로그아웃
+mixin __msgAlert(msg)
+    .alert.alert-warning.alert-dismissible.fade.show.mt-2(role='alert')
+        |  #{msg}
+        button.close(type='button' data-dismiss='alert' aria-label='Close')
+            span(aria-hidden='true') &times;

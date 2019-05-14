@@ -1,15 +1,25 @@
-.d-flex.p-2.w-100.h-75.bd-highlight.justify-content-center.align-items-center.c-content-area
-  form.d-flex.flex-column.w-50.h-75.justify-content-between.align-items-start.js__signinfrm(action='/user/signin' method='POST')
-    label(for='userId') Email
-    input#userId.form-control(type='email' placeholder='Email Address' name='userId' required='')
-    label(for='userPassword') Password
-    input#userPassword.form-control(type='password' placeholder='Password..' name='userPassword' required='')
-    label(for='userPasswordCheck') Password Confirm
-    input#userPasswordCheck.form-control(type='password' placeholder='Password Confirm..' required='')
-    #passwordCheckText.alert.alert-primary.mt-2.w-100(role='alert')
-      | Checking Password Confirm..
-    label(for='userNickName') NickName
-    input#userNickName.form-control(type='text' placeholder='NickName..' name='userNickName')
-    button.btn.btn-success.mt-2.w-100(type='submit') SignIn
-
-script(src="/javascripts/common.js")
+script(src='/javascripts/validation.js')
+.d-flex.p-2.w-100.h-75.bd-highlight.justify-content-center.align-items-stretch.c-content-area
+  form.d-flex.mt-5.h-100.flex-column.justify-content-around.align-items-start.c-signin-box.js__signinfrm(action='/user/signin' method='POST')
+    h1.pb-3.w-100.text-center.border-bottom.border-info Create New User
+    label.mt-4.font-weight-bold(for='userName') UserName
+    .input-group
+      input#userName.form-control(type='text' name='userName' maxlength=20 required)
+      .input-group-append
+        span#userNameAddOn
+    span#userNameStatus.text-muted Please enter your username
+    label.mt-4.font-weight-bold(for='userEmail') Email
+    .input-group
+      input#userEmail.form-control(type='email' name='userEmail' required)
+      .input-group-append
+        span#userEmailAddOn
+    span#userEmailStatus.text-muted Please enter your Email Address
+    label.mt-4.font-weight-bold(for='userPassword') Password
+    input#userPassword.form-control(type='password' name='userPassword' required)
+    label.mt-4.font-weight-bold(for='userPasswordConfirm') Password Confirm
+    .input-group
+      input#userPasswordConfirm.form-control(type='password' required)
+      .input-group-append
+        span#userPasswordConfirmAddOn.input-group-text.danger <i class="fas fa-exclamation-circle"></i>
+    span#userPasswordConfirmStatus.text-muted Please enter your password again
+    button.btn.btn-outline-info.mt-4.w-100.js__signinbtn(type='submit' disabled) Create New Account

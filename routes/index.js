@@ -1,7 +1,5 @@
 var express = require("express");
 var router = express.Router();
-var db = require("../lib/db");
-var queries = require("../lib/queries");
 
 router.get("/", function(req, res, next) {
   var isLogined = true;
