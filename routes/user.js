@@ -9,8 +9,8 @@ module.exports = function(passport) {
   router.get("/login", function(req, res, next) {
     var fmsg = req.flash();
     var resParams = {};
-    if (fmsg.message) {
-      resParams.msg = fmsg.message;
+    if (fmsg.error) {
+      resParams.msg = fmsg.error;
     }
     resParams.content = "login";
     res.render("common", resParams);
@@ -45,6 +45,12 @@ module.exports = function(passport) {
       19.05.09 bcrypt 추가 
       req.body.userPassword -> bcrypt함수적용
     */
+    if (!req.body.userName || !req.body.userEmail || !req.body.userPassword) {
+      res.send(
+        `<script> alert('올바르지 않은 입력값 입니다.'); location.href='/user/signin'</script>`
+      );
+      return false;
+    }
     var insertParams = [
       shortid.generate(),
       req.body.userName,

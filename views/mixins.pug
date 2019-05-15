@@ -6,14 +6,14 @@ mixin _defaultPage()
     include includes/contents/_basic.pug
 mixin __userInfo(user)
     h2 로그인 정보
-    p 아이디 : !{user.id}
-    p 비밀번호 : !{user.password}
+    p 닉네임 : !{user.username}
     p 이메일 : !{user.email}
-    p 별칭 : !{user.nickname}
+    p 비밀번호 : !{user.password}
+    p 식별ID : !{user.id}
     p GoogleID : !{user.googleid}
     a(href="/user/logout") 로그아웃
 mixin __msgAlert(msg)
-    .alert.alert-warning.alert-dismissible.fade.show.mt-2(role='alert')
+    .alert.alert-danger.alert-dismissible.fade.show.mt-2(role='alert')
         |  #{msg}
         button.close(type='button' data-dismiss='alert' aria-label='Close')
             span(aria-hidden='true') &times;

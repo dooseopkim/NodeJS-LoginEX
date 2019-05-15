@@ -11,7 +11,7 @@ router.post("/validation/username", function(req, res, next) {
   });
 });
 router.post("/validation/email", function(req, res, next) {
-  db.query(queries.USEER_SELECT_ONE_WHERE_EMAIL, [req.body.email], function(err, results) {
+  db.query(queries.USER_SELECT_ONE_WHERE_EMAIL, [req.body.email], function(err, results) {
     if (err) throw err;
     var isExist = results.length === 1 ? true : false;
     res.json({ isExist: isExist });
