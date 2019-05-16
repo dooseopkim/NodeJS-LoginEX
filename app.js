@@ -6,12 +6,14 @@ var session = require("express-session");
 var FileStore = require("session-file-store")(session);
 var compression = require("compression");
 var flash = require("connect-flash");
+var logger = require("morgan");
 
 var app = express();
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
+app.use(logger("dev"));
 app.use(
   express.static("public", {
     setHeaders: function(res, path, stat) {
@@ -49,4 +51,5 @@ app.use(function(err, req, res, next) {
 app.use(function(req, res, next) {
   res.status(404).send("Sorry cant find that!");
 });
-app.listen(3000);
+// app.listen(3000);
+module.exports = app;
