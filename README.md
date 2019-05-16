@@ -161,3 +161,5 @@ email값이 읽혀진다. (그렇지 않다면 email은 null값)
 - [x] 비밀번호유효성2 (8자 이상 문자+숫자)
 - [x] 닉네임중복
 
+## Reference & Useful Site
+- [정규표현식을 테스트해볼 수 있는 사이트](https://www.regexpal.com/)

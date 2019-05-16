@@ -59,6 +59,7 @@ module.exports = function(passport) {
     ];
     db.query(queries.USER_INSERT, insertParams, function(err, result) {
       if (err) throw err;
+      // 회원가입에 성공한 메세지 또는 화면을 띄워주는게 좋겠지..?
       res.redirect("/user/login");
     });
   });

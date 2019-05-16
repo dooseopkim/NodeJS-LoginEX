@@ -1,6 +1,7 @@
 .container.d-flex.flex-column.justify-content-around.align-items-start.c-content-area
     if isLogined
-        +__userInfo(JSON.parse(loginParams))
+        +__msgAlertSuccess(msg)
+        +__userInfo(JSON.parse(loginUser))
     else
         h1 Not login
         a(href='/user/login') login

@@ -59,7 +59,7 @@ $(function() {
   };
   var PASSWORDCONFIRM_CONF = {
     group: "userPasswordConfirm",
-    mutedMsg: "닉네임을 입력해주세요 (한글 또는 영문 4-20자, _ 외 특수문자 불가)",
+    mutedMsg: "비밀번호를 한 번 더 입력해주세요",
     warningMsg: "올바르지 않은 비밀번호 형식",
     dangerMsg: "비밀번호가 일치하지 않습니다.",
     successMsg: "비밀번호가 일치합니다."

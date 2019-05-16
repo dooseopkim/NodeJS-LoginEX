@@ -10,10 +10,15 @@ mixin __userInfo(user)
     p 이메일 : !{user.email}
     p 비밀번호 : !{user.password}
     p 식별ID : !{user.id}
-    p GoogleID : !{user.googleid}
+    p 소셜연동 : !{user.sns_link}
     a(href="/user/logout") 로그아웃
-mixin __msgAlert(msg)
+mixin __msgAlertDanger(msg)
     .alert.alert-danger.alert-dismissible.fade.show.mt-2(role='alert')
+        |  #{msg}
+        button.close(type='button' data-dismiss='alert' aria-label='Close')
+            span(aria-hidden='true') &times;
+mixin __msgAlertSuccess(msg)
+    .alert.alert-success.alert-dismissible.fade.show.mt-2(role='alert')
         |  #{msg}
         button.close(type='button' data-dismiss='alert' aria-label='Close')
             span(aria-hidden='true') &times;
