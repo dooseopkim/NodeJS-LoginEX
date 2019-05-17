@@ -1,7 +1,7 @@
 $(function() {
   /**
    * =========================================================================
-   *  Variables & Constant
+   *  Variables & varant
    * =========================================================================
    */
 
@@ -22,7 +22,7 @@ $(function() {
     resetBtn = form.find(".js__resetbtn"),
     cancelBtn = form.find(".js__cancelbtn");
 
-  /* Constant */
+  /* varant */
   var USERNAME_CHECK_URL = "/signin/validation/username",
     EMAIL_CHECK_URL = "/signin/validation/email",
     SIGNIN_FORM_ACTION_URL = "/user/signin";
@@ -206,9 +206,7 @@ $(function() {
     if (confirm("모든 값을 초기화 하시겠습니까?")) {
       form[0].reset();
       var inputList = [USERNAME_CONF, EMAIL_CONF, PASSWORD_CONF, PASSWORDCONFIRM_CONF];
-      inputList.forEach(function(input) {
-        _InputGroupHTML(input, MUTED);
-      });
+      inputList.forEach(input => _InputGroupHTML(input, MUTED));
       userName.focus();
       return false;
     }

@@ -1,6 +1,6 @@
 .c-content-area.d-flex.justify-content-center.align-items-center
   .container.d-flex.justify-content-around.align-items-center.flex-wrap.c-login-box
-    .d-flex.flex-column.justify-content-between.c-box-left
+    .d-flex.flex-column.justify-content-between.col-lg-5.col-sm-10
       form(action='/user/login' method='POST')
         h2 로그인
         label.mt-2(for='userEmailUserName') 이메일 또는 닉네임
@@ -14,7 +14,7 @@
         .mt-1.w-100
           a.float-left(href='/user/signin') 새로운 계정 생성
           a.float-right(href='#') 비밀번호를 잊으셨나요?
-    .d-flex.flex-column.justify-content-between.c-box-right
+    .d-flex.flex-column.justify-content-between.col-lg-5.col-sm-10
       h2.align-self-start SNS 로그인
       a.btn.btn-outline-info.w-75.mt-2(href='/user/auth/google') Login with Google
       a.btn.btn-outline-danger.w-75.mt-2(href='/user/auth/github') Login with Github

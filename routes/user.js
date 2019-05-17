@@ -1,14 +1,14 @@
-var express = require("express");
-var router = express.Router();
-var bcrypt = require("bcrypt");
-var shortid = require("shortid");
-var db = require("../lib/db");
-var queries = require("../lib/queries");
+const express = require("express");
+const router = express.Router();
+const bcrypt = require("bcrypt");
+const shortid = require("shortid");
+const pool = require("../lib/db");
+const queries = require("../lib/queries");
 
-module.exports = function(passport) {
-  router.get("/login", function(req, res, next) {
-    var fmsg = req.flash();
-    var resParams = {};
+module.exports = passport => {
+  router.get("/login", (req, res, next) => {
+    const fmsg = req.flash();
+    let resParams = {};
     if (fmsg.error) {
       resParams.msg = fmsg.error;
     }
@@ -24,44 +24,43 @@ module.exports = function(passport) {
       failureFlash: true
     })
   );
-  router.get("/logout", function(req, res) {
+  router.get("/logout", (req, res) => {
     req.logout();
-    req.session.destroy(function(err) {
+    req.session.destroy(err => {
       if (err) throw err;
       res.redirect("/");
     });
   });
-  router.get("/signin", function(req, res, next) {
-    var fmsg = req.flash();
-    var resParams = {};
+  router.get("/signin", (req, res, next) => {
+    const fmsg = req.flash();
+    let resParams = {};
     if (fmsg.message) {
       resParams.msg = fmsg.message;
     }
     resParams.content = "signin";
     res.render("common", resParams);
   });
-  router.post("/signin", function(req, res, next) {
-    /* 
-      19.05.09 bcrypt 추가 
-      req.body.userPassword -> bcrypt함수적용
-    */
+  router.post("/signin", async (req, res, next) => {
     if (!req.body.userName || !req.body.userEmail || !req.body.userPassword) {
       res.send(
         `<script> alert('올바르지 않은 입력값 입니다.'); location.href='/user/signin'</script>`
       );
       return false;
     }
-    var insertParams = [
+    let args = [
       shortid.generate(),
       req.body.userName,
       req.body.userEmail,
       bcrypt.hashSync(req.body.userPassword, 10)
     ];
-    db.query(queries.USER_INSERT, insertParams, function(err, result) {
-      if (err) throw err;
-      // 회원가입에 성공한 메세지 또는 화면을 띄워주는게 좋겠지..?
+    console.log("args1", args);
+    try {
+      let rows = await pool.query(queries.USER_INSERT, args);
+      console.log("rows", rows);
       res.redirect("/user/login");
-    });
+    } catch (e) {
+      throw e;
+    }
   });
   /** Google 로그인 */
   router.get(
@@ -81,7 +80,10 @@ module.exports = function(passport) {
     })
   );
   /* Github 로그인 */
-  router.get("/auth/github", passport.authenticate("github", { scope: ["user:email"] }));
+  router.get(
+    "/auth/github",
+    passport.authenticate("github", { scope: ["read:user", "user:email"] })
+  );
 
   router.get(
     "/auth/github/callback",

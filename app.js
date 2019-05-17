@@ -1,14 +1,14 @@
-var express = require("express");
-var path = require("path");
-var bodyParser = require("body-parser");
-var cookieParser = require("cookie-parser");
-var session = require("express-session");
-var FileStore = require("session-file-store")(session);
-var compression = require("compression");
-var flash = require("connect-flash");
-var logger = require("morgan");
+const express = require("express");
+const path = require("path");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const FileStore = require("session-file-store")(session);
+const compression = require("compression");
+const flash = require("connect-flash");
+const logger = require("morgan");
 
-var app = express();
+const app = express();
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
@@ -16,7 +16,7 @@ app.set("view engine", "pug");
 app.use(logger("dev"));
 app.use(
   express.static("public", {
-    setHeaders: function(res, path, stat) {
+    setHeaders: (res, path, stat) => {
       res.set("x-timestamp", Date.now());
     }
   })
@@ -34,21 +34,21 @@ app.use(
     saveUninitialized: true
   })
 );
-var passport = require("./lib/strategies")(app);
+const passport = require("./lib/strategies")(app);
 
-var indexRouter = require("./routes/index");
-var userRouter = require("./routes/user")(passport);
-var signinRouter = require("./routes/signin");
+const indexRouter = require("./routes/index");
+const userRouter = require("./routes/user")(passport);
+const signinRouter = require("./routes/signin");
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/signin", signinRouter);
 
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
 });
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   res.status(404).send("Sorry cant find that!");
 });
 // app.listen(3000);

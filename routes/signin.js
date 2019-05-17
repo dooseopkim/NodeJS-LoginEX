@@ -1,21 +1,25 @@
-var express = require("express");
-var router = express.Router();
-var db = require("../lib/db");
-var queries = require("../lib/queries");
+const express = require("express");
+const router = express.Router();
+const pool = require("../lib/db");
+const queries = require("../lib/queries");
 
-router.post("/validation/username", function(req, res, next) {
-  db.query(queries.USER_SELECT_ONE_WHERE_USERNAME, [req.body.username], function(err, results) {
-    if (err) throw err;
-    var isExist = results.length === 1 ? true : false;
+router.post("/validation/username", async (req, res, next) => {
+  try {
+    let rows = await pool.query(queries.USER_SELECT_ONE_WHERE_USERNAME, [req.body.username]);
+    let isExist = rows.length === 1 ? true : false;
     res.json({ isExist: isExist });
-  });
+  } catch (e) {
+    throw e;
+  }
 });
-router.post("/validation/email", function(req, res, next) {
-  db.query(queries.USER_SELECT_ONE_WHERE_EMAIL, [req.body.email], function(err, results) {
-    if (err) throw err;
-    var isExist = results.length === 1 ? true : false;
+router.post("/validation/email", async (req, res, next) => {
+  try {
+    let rows = await pool.query(queries.USER_SELECT_ONE_WHERE_EMAIL, [req.body.email]);
+    let isExist = rows.length === 1 ? true : false;
     res.json({ isExist: isExist });
-  });
+  } catch (e) {
+    throw e;
+  }
 });
 
 module.exports = router;

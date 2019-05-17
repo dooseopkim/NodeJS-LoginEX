@@ -1,10 +1,10 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
-router.get("/", function(req, res, next) {
-  var resParams = {};
+router.get("/", (req, res, next) => {
+  let resParams = {};
 
-  var fmsg = req.flash();
+  const fmsg = req.flash();
   if (fmsg.success) {
     resParams.msg = fmsg.success;
   }
