@@ -94,5 +94,18 @@ module.exports = passport => {
       failureFlash: true
     })
   );
+
+  /* Kakao 로그인 */
+  router.get("/auth/kakao", passport.authenticate("kakao"));
+
+  router.get(
+    "/auth/kakao/callback",
+    passport.authenticate("kakao", {
+      successRedirect: "/",
+      successFlash: true,
+      failureRedirect: "/user/login",
+      failureFlash: true
+    })
+  );
   return router;
 };
