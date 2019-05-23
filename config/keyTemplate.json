@@ -1,41 +1,41 @@
 {
   "db": {
-    "host": "",
-    "user": "",
-    "password": "",
-    "database": ""
+    "host": "Dummy",
+    "user": "Dummy",
+    "password": "Dummy",
+    "database": "Dummy"
   },
   "google": {
     "web": {
-      "client_id": "",
-      "project_id": "",
-      "auth_uri": "",
-      "token_uri": "",
-      "auth_provider_x509_cert_url": "",
-      "client_secret": "",
-      "redirect_uris": [""],
-      "javascript_origins": [""]
+      "client_id": "Dummy",
+      "project_id": "Dummy",
+      "auth_uri": "Dummy",
+      "token_uri": "Dummy",
+      "auth_provider_x509_cert_url": "Dummy",
+      "client_secret": "Dummy",
+      "redirect_uris": ["Dummy"],
+      "javascript_origins": ["Dummy"]
     }
   },
   "github": {
-    "client_id": "",
-    "client_secret": "",
-    "callback_urls": [""]
+    "client_id": "Dummy",
+    "client_secret": "Dummy",
+    "callback_urls": ["Dummy"]
   },
   "kakao": {
-    "client_id": "",
-    "client_secret": "",
-    "callback_urls": [""]
+    "client_id": "Dummy",
+    "client_secret": "Dummy",
+    "callback_urls": ["Dummy"]
   },
   "naver": {
-    "client_id": "",
-    "client_secret": "",
-    "callback_urls": [""]
+    "client_id": "Dummy",
+    "client_secret": "Dummy",
+    "callback_urls": ["Dummy"]
   },
   "facebook": {
-    "client_id": "",
-    "client_secret": "",
-    "callback_URL": "",
+    "client_id": "Dummy",
+    "client_secret": "Dummy",
+    "callback_URL": "Dummy",
     "profileFields": ["id", "displayName", "email"]
   }
 }
