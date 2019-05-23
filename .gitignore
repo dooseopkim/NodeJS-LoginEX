@@ -1,6 +1,3 @@
 node_modules/
 config/_*
-public/javascripts/boot*
-public/javascripts/jquery3.4.1.min.js
-public/stylesheets/boot*
 sessions/

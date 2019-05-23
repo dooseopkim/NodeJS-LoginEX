@@ -1,7 +1,134 @@
 # NodeJS-LoginEX
-Login service using NodeJS, Express, Pug, Passport
-## Init & Environment
-1 `npm init`  
+NodeJS, Express, Passport 를 활용한 로그인 실습  
+로컬 로그인, 구글로그인, 깃헙로그인, 카카오로그인 구현,  
+template 엔진 pug를 적용함  
+
+## Environment
+Node : v10.15.0  
+npm : v6.4.1  
+DB : MySQL 5.6.39 for windows    
+Dependencies :
+```js
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "compression": "^1.7.4",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.4",
+    "debug": "^4.1.1",
+    "express": "^4.16.4",
+    "express-session": "^1.16.1",
+    "morgan": "~1.9.0",
+    "mysql": "^2.17.1",
+    "passport": "^0.4.0",
+    "passport-facebook": "^3.0.0",
+    "passport-github2": "^0.1.11",
+    "passport-google-oauth": "^2.0.0",
+    "passport-kakao": "0.0.5",
+    "passport-local": "^1.0.0",
+    "passport-naver": "^1.0.6",
+    "pug": "^2.0.3",
+    "sanitize-html": "^1.20.0",
+    "session-file-store": "^1.2.0",
+    "shortid": "^2.2.14",
+    "tmp": "^0.1.0"
+  }
+```
+&nbsp;  
+## Clone & Install
+### Step 1.
+```sh
+git clone https://github.com/dooseopkim/NodeJS-LoginEX.git
+
+cd NodeJS-LoginEX
+
+npm install
+```
+### Step 2.  
+If you installed a pm2 run `npm start` script, if not run with `node ./bin/www.`  
+I recommend installing pm2.
+Installing pm2 
+```sh
+npm install pm2 -g
+```
+If you want to know more about pm2. [Clik here!](https://www.npmjs.com/package/pm2)
+```sh
+# Installed pm2
+npm start
+# Not installed pm2
+node ./bin/www
+```
+### Step 3.  
+Open the Chrome Web browser.  
+URL : `http://localhost:3000`
+![image](https://user-images.githubusercontent.com/34496143/58231634-712c8e80-7d72-11e9-9f5d-2f07208559a3.png)
+If you see this screen, it's a success.
+### Step 4.
+
+# Working History
+### Step 1. Local User login
+Passport Strategy 추가
+### Directory Tree  
+```sh
+│  app.js
+│  package-lock.json
+│  package.json
+│  README.md
+├─bin
+│  www // npm start is (pm2 start ./bin/www --watch --ignore-watch='session')
+│  
+├─config
+│      _key.json        // .gitignore
+│      keyTemplate.json // same structure as _key.json
+│      table.sql        // ddl
+│
+├─lib
+│      db.js
+│      query.js
+│      strategies.js
+│      util.js
+│      
+├─node_modules //.gitignore
+│  ├─...
+│
+├─public
+│  ├─images
+│  ├─javascripts
+│  │      boardAdd.js
+│  │      common.js
+│  │      validation.js
+│  │      
+│  └─stylesheets
+│          style.css
+│          
+├─routes
+│      boards.js
+│      images.js
+│      index.js
+│      signin.js
+│      user.js
+│      
+├─sessions //.gitignore
+│  ├─...
+│      
+└─views
+    │  common.pug
+    │  error.pug
+    │  layout.pug
+    │  mixins.pug
+    │  
+    └─includes
+        │  footer.pug
+        │  head.pug
+        │  nav.pug
+        │  
+        └─contents
+                _basic.pug
+                _boardAdd.pug
+                _login.pug
+                _mypage.pug
+                _signin.pug
+```  
+
 2 Add Dependencies & npm install
 ```javascript
 // package.json
@@ -26,20 +153,23 @@ Login service using NodeJS, Express, Pug, Passport
 
 3 Directory Tree  
 ```sh
-│  main.js
+│  app.js
 │  package-lock.json
 │  package.json
 │  README.md
+├─bin
+│  www // npm start is (pm2 start ./bin/www --watch --ignore-watch='session')
 │  
 ├─config
-│      db.json       //.gitignore
-│      facebook.json //.gitignore
-│      google.json   //.gitignore
-│      
+│      _key.json        // .gitignore
+│      keyTemplate.json // same structure as _key.json
+│      table.sql        // ddl
+│
 ├─lib
 │      db.js
 │      query.js
 │      strategies.js
+│      util.js
 │      
 ├─node_modules //.gitignore
 │  ├─...
@@ -47,14 +177,22 @@ Login service using NodeJS, Express, Pug, Passport
 ├─public
 │  ├─images
 │  ├─javascripts
+│  │      boardAdd.js
 │  │      common.js
+│  │      validation.js
 │  │      
 │  └─stylesheets
 │          style.css
 │          
 ├─routes
+│      boards.js
+│      images.js
 │      index.js
+│      signin.js
 │      user.js
+│      
+├─sessions //.gitignore
+│  ├─...
 │      
 └─views
     │  common.pug
@@ -64,11 +202,15 @@ Login service using NodeJS, Express, Pug, Passport
     │  
     └─includes
         │  footer.pug
+        │  head.pug
         │  nav.pug
         │  
         └─contents
+                _basic.pug
+                _boardAdd.pug
                 _login.pug
                 _mypage.pug
+                _signin.pug
 ```  
 &nbsp;  
 4 Passport Strategy 추가
@@ -146,6 +288,11 @@ passport.use(
 &nbsp;  Passport Docs : http://www.passportjs.org/packages/passport-github2/  
 깃헙 계정의 가입된 email이 아니라 profile상에 email이 등록되어있어야  
 email값이 읽혀진다. (그렇지 않다면 email은 null값)  
+&nbsp;  
+
+4.3 KakaoStrategy  
+&nbsp;  dev사이트 : https://developers.kakao.com/  
+&nbsp;  Passport Docs : http://www.passportjs.org/packages/passport-kakao/  
 &nbsp;  
 ***
 ## TodoList
