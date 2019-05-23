@@ -29,17 +29,41 @@ CREATE TABLE `SNS_INFO` (
   CONSTRAINT `sns_type` FOREIGN KEY (`sns_type`) REFERENCES `SNS_META` (`id`)
 );
 
--- DUMMY
-INSERT INTO users VALUES('U001','test_1@gmail.com','testname_1','testpassword_1',NOW(),NOW());
-INSERT INTO users VALUES('U002','test_2@gmail.com','testname_2','testpassword_2',NOW(),NOW());
-INSERT INTO users VALUES('U003','test_3@gmail.com','testname_3','testpassword_3',NOW(),NOW());
-INSERT INTO users VALUES('U004','test_4@gmail.com','testname_4','testpassword_4',NOW(),NOW());
-INSERT INTO users VALUES('U005','test_5@gmail.com','testname_5','testpassword_5',NOW(),NOW());
+CREATE TABLE `BOARD_CATEGORY`(
+	`id` VARCHAR(20) NOT NULL,
+  `description` VARCHAR(100) NULL,
+  PRIMARY KEY (`id`)
+);
 
-INSERT INTO sns_meta VALUES('SM01','GOOGLE_OAUTH',NOW());
-INSERT INTO sns_meta VALUES('SM02','GITHUB_OAUTH',NOW());
-INSERT INTO sns_meta VALUES('SM03','FACEBOOK_OAUTH',NOW());
+CREATE TABLE `BOARD` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(255) NOT NULL,
+  `contents` TEXT  NULL,
+  `category_id` VARCHAR(20)  NULL,
+  `user_id` VARCHAR(50) NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`),
+  CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `BOARD_CATEGORY` (`id`)
+);
 
--- INSERT INTO sns_info VALUES('U001','PLEASE ENTER YOUR GOOGLE_ID','SM01','PLEASE ENTER TOUR GOOGLE_NAME',NOW());
-
-
+CREATE TABLE `FILE_INFO` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `file_name` VARCHAR(255),
+    `save_file_name` VARCHAR(255),
+    `content_type` VARCHAR(50),
+    `size` INT,
+    `req_count` INT DEFAULT 0,
+    `delete_flag` TINYINT(1) DEFAULT 0,
+    `create_date` DATETIME DEFAULT NOW(),
+    `delete_date` DATETIME,
+    PRIMARY KEY (`id`)
+);
+    
+CREATE TABLE `BOARD_IMAGE` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `board_id` INT NOT NULL,
+    `file_id` INT NOT NULL,
+    PRIMARY KEY (`ID`),
+    CONSTRAINT `board_id` FOREIGN KEY (`board_id`) REFERENCES `BOARD` (`id`),
+    CONSTRAINT `file_id` FOREIGN KEY (`file_id`) REFERENCES `FILE_INFO` (`id`)
+);

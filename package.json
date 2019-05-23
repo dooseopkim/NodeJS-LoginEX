@@ -4,7 +4,7 @@
   "description": "Login service using NodeJS, Express, Pug, Passport\r Init",
   "main": "index.js",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "pm2 start ./bin/www --watch --ignore-watch='session'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,7 +15,6 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.6",
-    "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.4",
@@ -25,17 +24,24 @@
     "morgan": "~1.9.0",
     "mysql": "^2.17.1",
     "passport": "^0.4.0",
+    "passport-facebook": "^3.0.0",
     "passport-github2": "^0.1.11",
     "passport-google-oauth": "^2.0.0",
     "passport-kakao": "0.0.5",
     "passport-local": "^1.0.0",
+    "passport-naver": "^1.0.6",
     "pug": "^2.0.3",
     "sanitize-html": "^1.20.0",
     "session-file-store": "^1.2.0",
-    "shortid": "^2.2.14"
+    "shortid": "^2.2.14",
+    "tmp": "^0.1.0"
   },
   "bugs": {
     "url": "https://github.com/dooseopkim/NodeJS-LoginEX/issues"
   },
-  "homepage": "https://github.com/dooseopkim/NodeJS-LoginEX#readme"
+  "homepage": "https://github.com/dooseopkim/NodeJS-LoginEX#readme",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {}
 }

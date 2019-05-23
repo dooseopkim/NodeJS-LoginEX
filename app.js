@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require("path");
-const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const FileStore = require("session-file-store")(session);
@@ -22,8 +21,8 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// PayloadTooLargeError fix
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(compression());
 app.use(flash());
 app.use(
@@ -39,10 +38,14 @@ const passport = require("./lib/strategies")(app);
 const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user")(passport);
 const signinRouter = require("./routes/signin");
+const boardsRouter = require("./routes/boards");
+const imagesRouter = require("./routes/images");
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/signin", signinRouter);
+app.use("/board", boardsRouter);
+app.use("/images", imagesRouter);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

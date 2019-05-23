@@ -1,4 +1,4 @@
-.container-fluid.bg-info.sticky-top
+.container-fluid.bg-info
   .container.bg-info
     nav.navbar.navbar-expand-lg.navbar-dark
       a.navbar-brand(href='/') LoginEx
@@ -6,13 +6,16 @@
         span.navbar-toggler-icon
       #navbarSupportedContent.collapse.navbar-collapse
         ul.navbar-nav.ml-auto
-          li.nav-item.active
-            a.nav-link(href='#')
-              | Home 
-              span.sr-only (current)
+          li.nav-item.dropdown.mr-2
+            a.nav-link.dropdown-toggle(data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') 게시판
+            .dropdown-menu
+              a.dropdown-item(href='/board/ca/fr') 자유게시판
+              a.dropdown-item(href='/board/ca/cm') 유머게시판
+              a.dropdown-item(href='/board/ca/qa') 질문게시판
           if isLogined
             li.nav-item
-              a.nav-link(href='/user/logout') Logout
+              a.nav-link(href='/user/logout') 로그아웃
           else
             li.nav-item
-              a.nav-link(href='/user/login') LogIn
+              a.nav-link(href='/user/login') 로그인
+          

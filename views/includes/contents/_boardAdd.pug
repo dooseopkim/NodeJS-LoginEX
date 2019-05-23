@@ -1,0 +1,28 @@
+link(rel='stylesheet' href='/stylesheets/tui-editor.min.css')
+link(rel='stylesheet' href='/stylesheets/tui-editor-contents.min.css')
+link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.33.0/codemirror.css')
+link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css')
+script(src='/javascripts/tui-editor-Editor-full.min.js')
+script(src='/javascripts/boardAdd.js')
+.container.d-flex.flex-column.justify-content-center.align-items-center.c-content-area
+  .row.border-bottom.w-100.pt-5
+    h2.text-left.font-weight-bold 새 글 등록
+  .row.w-100.pt-5
+    label.font-weight-bold(for='title') 글 제목
+    .input-group.mb-3.w-100
+      input#title.w-100.p-1.c-title-input(type="text" placeholder="글 제목을 입력해주세요(40자 이하)" name="title" maxlength=40)
+  .row.w-100.pt-3.d-flex.justify-content-between.align-items-center
+    .p-1.w-50 작성자 | 
+      a(href="#") #{username}
+    .p-1.w-25
+      select#category.custom-select(name="category")
+        option(selected='') 카테고리
+        option(value='fr') 자유게시판
+        option(value='cm') 유머게시판
+        option(value='qa') 질문게시판      
+  #editSection.w-100
+  .row.w-100.py-4.d-flex.justify-content-between.align-items-center
+    btn.w-30.btn.btn-outline-primary.px-4.py-1.c-btn.js__submitbtn 등록
+    btn.w-30.btn.btn-outline-warning.px-4.py-1.ml-2.c-btn.js__resetbtn 초기화
+    btn.w-30.btn.btn-outline-danger.px-4.py-1.ml-2.c-btn.js__cancelbtn 취소
+    

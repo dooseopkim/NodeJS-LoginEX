@@ -7,6 +7,12 @@ const queries = require("../lib/queries");
 
 module.exports = passport => {
   router.get("/login", (req, res, next) => {
+    /* 이미 로그인 된 경우 */
+    let user = req.user;
+    if (user) {
+      res.send(`<script>alert('이미 로그인 하셨습니다.');history.back();</script>`);
+      return false;
+    }
     const fmsg = req.flash();
     let resParams = {};
     if (fmsg.error) {
@@ -101,6 +107,32 @@ module.exports = passport => {
   router.get(
     "/auth/kakao/callback",
     passport.authenticate("kakao", {
+      successRedirect: "/",
+      successFlash: true,
+      failureRedirect: "/user/login",
+      failureFlash: true
+    })
+  );
+
+  /* Naver 로그인 */
+  router.get("/auth/naver", passport.authenticate("naver"));
+
+  router.get(
+    "/auth/naver/callback",
+    passport.authenticate("naver", {
+      successRedirect: "/",
+      successFlash: true,
+      failureRedirect: "/user/login",
+      failureFlash: true
+    })
+  );
+
+  /* FaceBook 로그인 */
+  router.get("/auth/facebook", passport.authenticate("facebook", { scope: ["email"] }));
+
+  router.get(
+    "/auth/facebook/callback",
+    passport.authenticate("facebook", {
       successRedirect: "/",
       successFlash: true,
       failureRedirect: "/user/login",

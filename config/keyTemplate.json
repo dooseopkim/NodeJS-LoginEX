@@ -1,0 +1,41 @@
+{
+  "db": {
+    "host": "",
+    "user": "",
+    "password": "",
+    "database": ""
+  },
+  "google": {
+    "web": {
+      "client_id": "",
+      "project_id": "",
+      "auth_uri": "",
+      "token_uri": "",
+      "auth_provider_x509_cert_url": "",
+      "client_secret": "",
+      "redirect_uris": [""],
+      "javascript_origins": [""]
+    }
+  },
+  "github": {
+    "client_id": "",
+    "client_secret": "",
+    "callback_urls": [""]
+  },
+  "kakao": {
+    "client_id": "",
+    "client_secret": "",
+    "callback_urls": [""]
+  },
+  "naver": {
+    "client_id": "",
+    "client_secret": "",
+    "callback_urls": [""]
+  },
+  "facebook": {
+    "client_id": "",
+    "client_secret": "",
+    "callback_URL": "",
+    "profileFields": ["id", "displayName", "email"]
+  }
+}

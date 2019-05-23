@@ -2,6 +2,8 @@ mixin _signinPage()
     include includes/contents/_signin.pug
 mixin _loginPage()
     include includes/contents/_login.pug
+mixin _boardAddPage()
+    include includes/contents/_boardAdd.pug    
 mixin _defaultPage()
     include includes/contents/_basic.pug
 mixin __userInfo(user)
@@ -22,3 +24,4 @@ mixin __msgAlertSuccess(msg)
         |  #{msg}
         button.close(type='button' data-dismiss='alert' aria-label='Close')
             span(aria-hidden='true') &times;
+
