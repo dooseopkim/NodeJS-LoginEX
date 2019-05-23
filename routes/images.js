@@ -2,25 +2,25 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../lib/db");
 const queries = require("../lib/queries");
-const utilJS = require("../lib/util");
+const commonJS = require("../lib/common");
 const shortid = require("shortid");
 const fs = require("fs");
-const tmp = require("tmp");
 
 router.post("/", async (req, res, next) => {
   let dateObj = new Date();
-  let SAVE_DIR = utilJS.getSaveDir(dateObj);
-  let image = JSON.parse(req.body.data);
+  let SAVE_DIR = commonJS.getSaveDir(dateObj);
 
-  let realFile64 = image.file.split(";")[1].split(",")[1];
+  let rawFile = JSON.parse(req.body.data);
+  let realFile64 = rawFile.file.split(";")[1].split(",")[1];
+
   let save_file_name = dateObj.getTime() + shortid.generate();
+  let args = [rawFile.file_name, save_file_name, rawFile.content_type, rawFile.size];
 
-  let args = [image.file_name, save_file_name, image.content_type, image.size];
   let resParams = {};
-
   try {
     /* file_info table insert */
     let rows = await pool.query(queries.FILE_INSERT, args);
+
     /* insert fail? */
     if (rows.affectedRows !== 1) {
       resParams.flag = false;
@@ -28,16 +28,17 @@ router.post("/", async (req, res, next) => {
       res.json(resParams);
       return false;
     }
+
     /* doesn't exist directory ? */
     if (!fs.existsSync(SAVE_DIR)) {
       fs.mkdirSync(SAVE_DIR);
-    } else {
-      fs.writeFileSync(`${SAVE_DIR}/${save_file_name}`, realFile64, "base64");
-      resParams.flag = true;
-      resParams.msg = "success";
-      resParams.url = `http://localhost:3000/images/${rows.insertId}`;
-      res.json(resParams);
     }
+
+    fs.writeFileSync(`${SAVE_DIR}/${save_file_name}`, realFile64, "base64");
+    resParams.flag = true;
+    resParams.msg = "success";
+    resParams.url = `http://localhost:3000/images/${rows.insertId}`;
+    res.json(resParams);
   } catch (e) {
     throw e;
   }
@@ -48,19 +49,20 @@ router.get("/:id", async (req, res, next) => {
   try {
     /* view count++ */
     rows = await pool.query(queries.FILE_UPDATE_ONE_WHERE_ID_COUNT_PLUS, [fileId]);
+
     /* get file info */
     rows = await pool.query(queries.FILE_SELECT_ONE_WHERE_ID, [fileId]);
     file = rows[0];
 
-    const SAVE_DIR = utilJS.getSaveDir(new Date(file.create_date));
+    const SAVE_DIR = commonJS.getSaveDir(new Date(file.create_date));
     const FULL_FILE_INFO = `${SAVE_DIR}/${file.save_file_name}`;
 
-    const img = fs.readFileSync(FULL_FILE_INFO);
+    const rawFile = fs.readFileSync(FULL_FILE_INFO);
     res.writeHead(200, {
       "Content-Type": file.content_type,
       "Content-Transfer-Encoding": "binary"
     });
-    res.end(img);
+    res.end(rawFile);
   } catch (e) {
     throw e;
   }

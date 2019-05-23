@@ -28,7 +28,7 @@ app.use(flash());
 app.use(
   session({
     store: new FileStore(),
-    secret: "keyboard",
+    secret: "dooseop",
     resave: false,
     saveUninitialized: true
   })

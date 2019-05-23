@@ -57,6 +57,7 @@ npm start
 # Not installed pm2
 node ./bin/www
 ```
+### Must 
 ### Step 3.  
 Open the Chrome Web browser.  
 URL : `http://localhost:3000`
@@ -85,7 +86,7 @@ Passport Strategy 추가
 │      db.js
 │      query.js
 │      strategies.js
-│      util.js
+│      common.js
 │      
 ├─node_modules //.gitignore
 │  ├─...
@@ -94,7 +95,6 @@ Passport Strategy 추가
 │  ├─images
 │  ├─javascripts
 │  │      boardAdd.js
-│  │      common.js
 │  │      validation.js
 │  │      
 │  └─stylesheets

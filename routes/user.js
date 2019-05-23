@@ -13,6 +13,7 @@ module.exports = passport => {
       res.send(`<script>alert('이미 로그인 하셨습니다.');history.back();</script>`);
       return false;
     }
+
     const fmsg = req.flash();
     let resParams = {};
     if (fmsg.error) {
@@ -21,6 +22,7 @@ module.exports = passport => {
     resParams.content = "login";
     res.render("common", resParams);
   });
+
   router.post(
     "/login",
     passport.authenticate("local", {
@@ -30,6 +32,7 @@ module.exports = passport => {
       failureFlash: true
     })
   );
+
   router.get("/logout", (req, res) => {
     req.logout();
     req.session.destroy(err => {
@@ -37,6 +40,7 @@ module.exports = passport => {
       res.redirect("/");
     });
   });
+
   router.get("/signin", (req, res, next) => {
     const fmsg = req.flash();
     let resParams = {};
@@ -59,10 +63,9 @@ module.exports = passport => {
       req.body.userEmail,
       bcrypt.hashSync(req.body.userPassword, 10)
     ];
-    console.log("args1", args);
+
     try {
       let rows = await pool.query(queries.USER_INSERT, args);
-      console.log("rows", rows);
       res.redirect("/user/login");
     } catch (e) {
       throw e;
