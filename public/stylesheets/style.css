@@ -56,3 +56,19 @@ body {
   background-color: rgb(240, 173, 78);
   border-color: rgb(238, 162, 54);
 }
+/* boardList Column size */
+table thead tr th:nth-child(1) {
+  width: 5%;
+}
+table thead tr th:nth-child(2) {
+  width: 55%;
+}
+table thead tr th:nth-child(3) {
+  width: 15%;
+}
+table thead tr th:nth-child(4) {
+  width: 15%;
+}
+table thead tr th:nth-child(5) {
+  width: 10%;
+}

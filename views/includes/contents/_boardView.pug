@@ -1,0 +1,50 @@
+link(rel='stylesheet' href='/stylesheets/tui-editor.min.css')
+link(rel='stylesheet' href='/stylesheets/tui-editor-contents.min.css')
+link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.33.0/codemirror.css')
+link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css')
+script(src='/javascripts/tui-editor-Viewer-full.min.js')
+script(src='/javascripts/boardView.js')
+.container.d-flex.flex-column.justify-content-center.align-items-center.c-content-area
+  .row.w-100.pt-5
+    h2.text-left.font-weight-bold #{category}
+  .row.w-100.pt-5 
+    h4.w-100.pb-2.font-weight-bold.border-bottom #{title}
+  .row.w-100.py-3.d-flex.justify-content-start.align-items-center
+    .p-1.w-25 작성자 | 
+      a(href="#") #{username}
+    .p-1.w-25.text-muted #{createDate}
+  #editSection.w-100
+  .row.w-100.py-4.d-flex.justify-content-between.align-items-center
+    btn.w-30.btn.btn-outline-primary.px-4.py-1.c-btn.js__submitbtn 등록
+    btn.w-30.btn.btn-outline-warning.px-4.py-1.ml-2.c-btn.js__resetbtn 초기화
+    btn.w-30.btn.btn-outline-danger.px-4.py-1.ml-2.c-btn.js__cancelbtn 취소
+  input#boardId(type="hidden" name="boardId" value=`${boardId}`)
+  input#userId(type="hidden" name="userId" value=`${userId}`)
+script.
+  var c1 = (`!{contents}`)
+  console.log(typeof(c1))
+  console.log(c1.split('\n'))
+  console.log(c1)
+  function unescape(str){
+  return str
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&#36;/g,"\$");
+  };
+  function codeBlock(str){
+    return str.replace(/~~~[a-z]*\n[\s\S]*?\n~~~/g,function(s){
+      return unescape(s)
+    })
+  }
+  //- c1 = unescape(c1);
+  //- c1 = codeBlock(c1);
+  console.log(c1)
+  var editor = new tui.Editor({
+    el: document.querySelector("#editSection"),
+    initialValue: c1,
+    height: "800px",
+  });
+    

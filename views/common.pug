@@ -8,6 +8,9 @@ block contents
         when 'signin': +_signinPage()
         when 'login': +_loginPage()
         when 'bbsAdd': +_boardAddPage()
+        when 'bbsView': +_boardViewPage()
+        when 'bbsViewTest': +_boardViewTestPage()
+        when 'bbsList': +_boardListPage()
         default: +_defaultPage()
 block footer
     include includes/footer.pug

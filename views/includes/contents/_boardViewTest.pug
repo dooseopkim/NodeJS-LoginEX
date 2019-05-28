@@ -1,0 +1,61 @@
+link(rel='stylesheet' href='/stylesheets/tui-editor.min.css')
+link(rel='stylesheet' href='/stylesheets/tui-editor-contents.min.css')
+link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.33.0/codemirror.css')
+link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css')
+script(src='/javascripts/tui-editor-Viewer-full.min.js')
+script(src='/javascripts/boardView.js')
+.container.d-flex.flex-column.justify-content-center.align-items-center.c-content-area
+  .row.w-100.pt-5
+    h2.text-left.font-weight-bold #{category}
+  .row.w-100.pt-5 
+    h4.w-100.pb-2.font-weight-bold.border-bottom #{title}
+  .row.w-100.py-3.d-flex.justify-content-start.align-items-center
+    .p-1.w-25 작성자 | 
+      a(href="#") #{username}
+    .p-1.w-25.text-muted #{createDate}
+  #editSection.w-100
+  .row.w-100.py-4.d-flex.justify-content-between.align-items-center
+    btn.w-30.btn.btn-outline-primary.px-4.py-1.c-btn.js__submitbtn 등록
+    btn.w-30.btn.btn-outline-warning.px-4.py-1.ml-2.c-btn.js__resetbtn 초기화
+    btn.w-30.btn.btn-outline-danger.px-4.py-1.ml-2.c-btn.js__cancelbtn 취소
+  input#boardId(type="hidden" name="boardId" value=`${boardId}`)
+  input#userId(type="hidden" name="userId" value=`${userId}`)
+script.
+  var content = [
+    '![image](https://cloud.githubusercontent.com/assets/389021/16107646/9729e556-33d8-11e6-933f-5b09fa3a53bb.png)',
+    '# Heading 1',
+    '## Heading 2',
+    '### Heading 3',
+    '#### Heading 4',
+    '##### Heading 5',
+    '###### Heading 6',
+    '    code block',
+    '```js',
+    'console.log("fenced code block");',
+    '```',
+    '<pre>**HTML block**</pre>',
+    '* list',
+    '    * list indented',
+    '1. ordered',
+    '2. list',
+    '    1. ordered list',
+    '    2. indented',
+    '',
+    '- [ ] task',
+    '- [x] list completed',
+    '',
+    '[link](https://nhn.github.io/tui.editor/)',
+    '> block quote',
+    '---',
+    'horizontal line',
+    '***',
+    '`code`, *italic*, **bold**, ~~strikethrough~~, <span style="color:#e11d21">Red color</span>',
+    '|table|head|',
+    '|---|---|',
+    '|table|body|'
+  ].join('\n');
+  var editor = new tui.Editor({
+    el: document.querySelector('#editSection'),
+    height: '300px'
+  });
+  editor.setValue(content)

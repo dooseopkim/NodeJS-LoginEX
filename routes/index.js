@@ -5,6 +5,9 @@ router.get("/", (req, res, next) => {
   let resParams = {};
 
   const fmsg = req.flash();
+  console.log("=================================");
+  console.log("fmsg", fmsg);
+  console.log("=================================");
   if (fmsg.success) {
     resParams.msg = fmsg.success;
   }

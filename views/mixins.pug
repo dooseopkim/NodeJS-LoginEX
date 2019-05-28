@@ -3,7 +3,13 @@ mixin _signinPage()
 mixin _loginPage()
     include includes/contents/_login.pug
 mixin _boardAddPage()
-    include includes/contents/_boardAdd.pug    
+    include includes/contents/_boardAdd.pug   
+mixin _boardViewPage()
+    include includes/contents/_boardView.pug    
+mixin _boardViewTestPage()
+    include includes/contents/_boardViewTest.pug
+mixin _boardListPage()
+    include includes/contents/_boardList.pug    
 mixin _defaultPage()
     include includes/contents/_basic.pug
 mixin __userInfo(user)
@@ -24,4 +30,49 @@ mixin __msgAlertSuccess(msg)
         |  #{msg}
         button.close(type='button' data-dismiss='alert' aria-label='Close')
             span(aria-hidden='true') &times;
+mixin __editor(contents)
+    script.
+        var contents =JSON.parse(`!{contents}`).join('\n').replace(/\^/g,'\`')
+        var editor = new tui.Editor({
+          el: document.querySelector("#editSection"),
+          viewOnly: true,
+          initialValue: contents,
+          height: "800px",
+        });
+mixin __boardListElement(boardInfo)
+    tr
+        th(scope='row') !{boardInfo.id}
+        td 
+            a(href=`/board/${boardInfo.id}`) !{boardInfo.title}
+        td !{boardInfo.username}
+        td !{boardInfo.create_date}
+        td !{boardInfo.view_count}
+mixin __boardListPagination(pageInfo,categoryId)
+    if pageInfo.currentPageNum === 1
+        li.page-item.disabled
+            span.page-link 이전
+    else
+        li.page-item
+            a.page-link(href=`/board/c/${categoryId}/p/${Number(pageInfo.currentPageNum) - 1}`) 이전
+    -for(var i = pageInfo.startPageNum; i <= pageInfo.endPageNum; i++)
+        if i === pageInfo.currentPageNum
+            li.page-item.active(aria-current='page')
+                span.page-link
+                    | #{i}
+                    span.sr-only (current)
+        else
+            li.page-item
+                a.page-link(href=`/board/c/${categoryId}/p/${i}`) #{i}
+    if pageInfo.currentPageNum === pageInfo.totalPageNum
+        li.page-item.disabled
+            span.page-link 다음
+    else
+        li.page-item
+            a.page-link(href=`/board/c/${categoryId}/p/${Number(pageInfo.currentPageNum) + 1}`) 다음
+        //- li.page-item
+        //-    a.page-link(href='#') 1
 
+        //- li.page-item
+        //-    a.page-link(href='#') 3
+        //- li.page-item
+        //-   a.page-link(href='#') Next
