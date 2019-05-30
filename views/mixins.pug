@@ -6,10 +6,12 @@ mixin _boardAddPage()
     include includes/contents/_boardAdd.pug   
 mixin _boardViewPage()
     include includes/contents/_boardView.pug    
-mixin _boardViewTestPage()
-    include includes/contents/_boardViewTest.pug
 mixin _boardListPage()
     include includes/contents/_boardList.pug    
+mixin _boardUpdatePage()
+    include includes/contents/_boardUpdate.pug    
+mixin _boardTestPage()
+    include includes/contents/_boardTest.pug    
 mixin _defaultPage()
     include includes/contents/_basic.pug
 mixin __userInfo(user)
@@ -39,6 +41,14 @@ mixin __editor(contents)
           initialValue: contents,
           height: "800px",
         });
+mixin __categorieOptions(categories, categoryId)    
+    unless categoryId
+        option(selected value="") 선택해주세요..
+    -for(var i = 0; i < categories.length; i++ )
+        if categories[i].id === categoryId
+            option(value=`${categories[i].id}` selected) !{categories[i].description} 
+        else
+            option(value=`${categories[i].id}`) !{categories[i].description} 
 mixin __boardListElement(boardInfo)
     tr
         th(scope='row') !{boardInfo.id}

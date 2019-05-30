@@ -9,8 +9,9 @@ block contents
         when 'login': +_loginPage()
         when 'bbsAdd': +_boardAddPage()
         when 'bbsView': +_boardViewPage()
-        when 'bbsViewTest': +_boardViewTestPage()
         when 'bbsList': +_boardListPage()
+        when 'bbsUpdate': +_boardUpdatePage()
+        when 'bbsTest': +_boardTestPage()
         default: +_defaultPage()
 block footer
     include includes/footer.pug
