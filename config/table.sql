@@ -3,8 +3,9 @@ CREATE  TABLE `USERS` (
   `username` VARCHAR(50) NULL ,
   `email` VARCHAR(100) NULL ,
   `password` VARCHAR(100) NULL ,
-  `create_date` DATETIME NULL ,
-  `modify_date` DATETIME NULL ,
+  `create_date` DATETIME DEFAULT NOW(),
+  `modify_date` DATETIME DEFAULT NOW(),
+  `sns_link` TINYINT(2) DEFAULT 0,
   PRIMARY KEY (`id`) ,
   INDEX `idx1_username` (`username` ASC) ,
   INDEX `idx2_email` (`email` ASC)
@@ -13,7 +14,8 @@ CREATE  TABLE `USERS` (
 CREATE TABLE `SNS_META` (
   `id` VARCHAR(10) NOT NULL,
   `name` VARCHAR(50) NOT NULL,
-  `created_date` DATETIME NOT NULL,
+  `created_date` DATETIME DEFAULT NOW(),
+  `docs` VARCHAR(100) NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -41,6 +43,10 @@ CREATE TABLE `BOARD` (
   `contents` TEXT  NULL,
   `category_id` VARCHAR(20)  NULL,
   `user_id` VARCHAR(50) NULL,
+  `del_flag` TINYINT(1) DEFAULT 0,
+  `view_count` INT DEFAULT 0,
+  `create_date` DATETIME DEFAULT NOW(),
+  `modify_date` DATETIME DEFAULT NOW(),
   PRIMARY KEY (`id`),
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`),
   CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `BOARD_CATEGORY` (`id`)
@@ -48,15 +54,15 @@ CREATE TABLE `BOARD` (
 
 CREATE TABLE `FILE_INFO` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-    `file_name` VARCHAR(255),
-    `save_file_name` VARCHAR(255),
-    `content_type` VARCHAR(50),
-    `size` INT,
-    `req_count` INT DEFAULT 0,
-    `delete_flag` TINYINT(1) DEFAULT 0,
-    `create_date` DATETIME DEFAULT NOW(),
-    `delete_date` DATETIME,
-    PRIMARY KEY (`id`)
+  `file_name` VARCHAR(255),
+  `save_file_name` VARCHAR(255),
+  `content_type` VARCHAR(50),
+  `size` INT,
+  `req_count` INT DEFAULT 0,
+  `delete_flag` TINYINT(1) DEFAULT 0,
+  `create_date` DATETIME DEFAULT NOW(),
+  `delete_date` DATETIME,
+  PRIMARY KEY (`id`)
 );
     
 CREATE TABLE `BOARD_IMAGE` (
