@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
   let resParams = {};
 
   const fmsg = req.flash();

@@ -73,3 +73,20 @@ CREATE TABLE `BOARD_IMAGE` (
     CONSTRAINT `board_id` FOREIGN KEY (`board_id`) REFERENCES `BOARD` (`id`),
     CONSTRAINT `file_id` FOREIGN KEY (`file_id`) REFERENCES `FILE_INFO` (`id`)
 );
+
+CREATE TABLE `COMMENT` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `board_id` INT,
+  `contents` TEXT NULL,
+  `user_id` VARCHAR(50),
+  `create_date` DATETIME DEFAULT NOW(),
+  `modify_date` DATETIME DEFAULT NOW(),
+  `del_flag` TINYINT(1) DEFAULT 0,
+  `like`INT DEFAULT 0,
+  `unlike` INT DEFAULT 0,
+  `group_id` INT NULL,
+  `group_order` INT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `board_id_comment` FOREIGN KEY (`board_id`) REFERENCES `board` (`id`),
+  CONSTRAINT `user_id_comment` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+);

@@ -11,6 +11,15 @@ const createError = require("http-errors");
 
 const app = express();
 
+// app.all("/*", function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization"
+//   );
+//   next();
+// });
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
@@ -23,14 +32,15 @@ app.use(
     }
   })
 );
+
 app.use(cookieParser());
-// PayloadTooLargeError fix
+app.use(express.json());
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(compression());
 app.use(flash());
 app.use(
   session({
-    store: new FileStore(),
+    store: new FileStore({ path: "./sessions/" }),
     secret: "dooseop",
     resave: false,
     saveUninitialized: true
@@ -43,12 +53,14 @@ const userRouter = require("./routes/user")(passport);
 const signinRouter = require("./routes/signin");
 const boardsRouter = require("./routes/boards");
 const imagesRouter = require("./routes/images");
+const commentsRouter = require("./routes/comments");
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/signin", signinRouter);
 app.use("/board", boardsRouter);
 app.use("/images", imagesRouter);
+app.use("/comments", commentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

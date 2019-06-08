@@ -1,103 +1,25 @@
-<!DOCTYPE html>
-<html class="no-js" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Foundation | Welcome</title>
-    <link
-      rel="stylesheet"
-      href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css"
-    />
-  </head>
-  <body>
-    <div class="top-bar">
-      <div class="top-bar-left">
-        <ul class="menu">
-          <li class="menu-text">Blog</li>
-          <li><a href="#">One</a></li>
-          <li><a href="#">Two</a></li>
-          <li><a href="#">Three</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="callout large primary">
-      <div class="row column text-center">
-        <h1>Our Blog</h1>
-        <h2 class="subheader">Such a Simple Blog Layout</h2>
-      </div>
-    </div>
-
-    <div class="row medium-8 large-7 columns">
-      <div class="blog-post">
-        <h3>Awesome blog post title <small>3/6/2015</small></h3>
-        <img class="thumbnail" src="https://placehold.it/850x350" />
-        <p>
-          Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo
-          dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc
-          eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In
-          pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.
-        </p>
-        <div class="callout">
-          <ul class="menu simple">
-            <li><a href="#">Author: Mike Mikers</a></li>
-            <li><a href="#">Comments: 3</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="blog-post">
-        <h3>Awesome blog post title <small>3/6/2015</small></h3>
-        <img class="thumbnail" src="https://placehold.it/850x350" />
-        <p>
-          Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo
-          dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc
-          eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In
-          pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.
-        </p>
-        <div class="callout">
-          <ul class="menu simple">
-            <li><a href="#">Author: Mike Mikers</a></li>
-            <li><a href="#">Comments: 3</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="blog-post">
-        <h3>Awesome blog post title <small>3/6/2015</small></h3>
-        <img class="thumbnail" src="https://placehold.it/850x350" />
-        <p>
-          Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo
-          dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc
-          eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In
-          pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.
-        </p>
-        <div class="callout">
-          <ul class="menu simple">
-            <li><a href="#">Author: Mike Mikers</a></li>
-            <li><a href="#">Comments: 3</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="blog-post">
-        <h3>Awesome blog post title <small>3/6/2015</small></h3>
-        <img class="thumbnail" src="https://placehold.it/850x350" />
-        <p>
-          Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo
-          dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc
-          eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In
-          pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.
-        </p>
-        <div class="callout">
-          <ul class="menu simple">
-            <li><a href="#">Author: Mike Mikers</a></li>
-            <li><a href="#">Comments: 3</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
-    <script>
-      $(document).foundation();
-    </script>
-  </body>
-</html>
+<div class="comment-item">
+  <div class="comment-header">
+    <h5 class="h5 mb-0 comment-title">${username}</h5>
+    <span class="comment-date">${modifyDate}</span>
+  </div>
+  <div class="comment-body"><p>${comments}</p></div>
+  <div class="comment-footer">
+    <ul class="list-inline d-sm-flex my-0">
+      <li class="list-inline-item">
+        <button class="comment-like js__likeBtn"><i class="fa fa-thumbs-up"></i></button
+        ><span>${like}</span>
+      </li>
+      <li class="list-inline-item">
+        <button class="comment-unLike js__unLikeBtn">
+          <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i></button
+        ><span>${unlike}</span>
+      </li>
+      <li class="list-inline-item ml-auto">
+        <button class="comment-reply js__replyBtn">
+          <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i> Reply
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -18,10 +18,19 @@ script(src='/javascripts/tui-editor-Viewer-full.min.js')
       a.btn.btn-outline-warning.px-4.py-1.ml-2.c-btn(href=`/board/c/${categoryId}/p/1`) 목록으로
       button.btn.btn-outline-info.px-4.py-1.c-btn.js__updatebtn 수정
     else
-      a.btn.btn-outline-warning.px-4.py-1.ml-2.c-btn(href=`/board/${category}/p/1`) 목록으로
+      a.btn.btn-outline-warning.px-4.py-1.ml-2.c-btn(href=`/board/c/${categoryId}/p/1`) 목록으로
   input#boardId(type="hidden" name="boardId" value=`${boardId}`)
 script.
   var contents = (`!{contents}`)
-
 script(src='/javascripts/boardView.js')
-    
+.container.comments-container.mt-3
+  h2.w-100.mt-4.text-left 댓글
+  .comment-form
+    form
+      .form-group.mt-4
+        label(for='comments')
+          strong 댓글작성
+        textarea.js__commentsText.form-control(name='comments' cols='40' rows='5')
+      .form-group.text-right
+        button.btn.btn-primary.px-4.js__commentSubmitBtn(type='button')
+          | 제출

@@ -111,8 +111,13 @@ router.get("/:boardId", async (req, res, next) => {
       res.send(`<script>alert('삭제된 글입니다.');history.back();</script>`);
       return false;
     }
-    /* 조회수 1 업 */
-    rows = await pool.query(queries.BOARD_UPDATE_VIEW_COUNT_UP_WHERE_ID, [boardId]);
+    /* 쿠키확인 조회수 중복업 방지 */
+    let cookies = req.cookies;
+    if (cookies._lastBoardId !== boardId) {
+      /* 조회수 1 업 */
+      rows = await pool.query(queries.BOARD_UPDATE_VIEW_COUNT_UP_WHERE_ID, [boardId]);
+      res.cookie("_lastBoardId", boardId);
+    }
 
     /* 로그인 유저, 게시글 작성유저 동일여부 */
     if (user.id === board.user_id) {
@@ -129,7 +134,7 @@ router.get("/:boardId", async (req, res, next) => {
       category: board.category,
       userId: board.user_id,
       username: board.username,
-      createDate: commonJS.getDateString(board.create_date),
+      createDate: commonJS.getDateStringFull(board.create_date),
       isMyPost: isMyPost,
       isLogined: true,
       content: "bbsView" // 렌더링 페이지

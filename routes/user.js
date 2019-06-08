@@ -26,17 +26,24 @@ module.exports = passport => {
   router.post(
     "/login",
     passport.authenticate("local", {
-      successRedirect: "/",
       successFlash: true,
       failureRedirect: "/user/login",
       failureFlash: true
-    })
+    }),
+    async (req, res, next) => {
+      req.session.save(err => {
+        if (err) throw err;
+        console.log("씨발아");
+        res.redirect("/");
+      });
+    }
   );
 
   router.get("/logout", (req, res) => {
     req.logout();
-    req.session.destroy(err => {
+    req.session.save(err => {
       if (err) throw err;
+      console.log("개씨발아");
       res.redirect("/");
     });
   });
@@ -82,11 +89,17 @@ module.exports = passport => {
   router.get(
     "/auth/google/callback",
     passport.authenticate("google", {
-      successRedirect: "/",
       successFlash: true,
       failureRedirect: "/user/login",
       failureFlash: true
-    })
+    }),
+    async (req, res, next) => {
+      req.session.save(err => {
+        if (err) throw err;
+        console.log("씨발아");
+        res.redirect("/");
+      });
+    }
   );
   /* Github 로그인 */
   router.get(
@@ -97,11 +110,17 @@ module.exports = passport => {
   router.get(
     "/auth/github/callback",
     passport.authenticate("github", {
-      successRedirect: "/",
       successFlash: true,
       failureRedirect: "/user/login",
       failureFlash: true
-    })
+    }),
+    async (req, res, next) => {
+      req.session.save(err => {
+        if (err) throw err;
+        console.log("씨발아");
+        res.redirect("/");
+      });
+    }
   );
 
   /* Kakao 로그인 */
@@ -110,11 +129,17 @@ module.exports = passport => {
   router.get(
     "/auth/kakao/callback",
     passport.authenticate("kakao", {
-      successRedirect: "/",
       successFlash: true,
       failureRedirect: "/user/login",
       failureFlash: true
-    })
+    }),
+    async (req, res, next) => {
+      req.session.save(err => {
+        if (err) throw err;
+        console.log("씨발아");
+        res.redirect("/");
+      });
+    }
   );
 
   /* Naver 로그인 */
@@ -123,11 +148,17 @@ module.exports = passport => {
   router.get(
     "/auth/naver/callback",
     passport.authenticate("naver", {
-      successRedirect: "/",
       successFlash: true,
       failureRedirect: "/user/login",
       failureFlash: true
-    })
+    }),
+    async (req, res, next) => {
+      req.session.save(err => {
+        if (err) throw err;
+        console.log("씨발아");
+        res.redirect("/");
+      });
+    }
   );
 
   /* FaceBook 로그인 */
@@ -136,11 +167,17 @@ module.exports = passport => {
   router.get(
     "/auth/facebook/callback",
     passport.authenticate("facebook", {
-      successRedirect: "/",
       successFlash: true,
       failureRedirect: "/user/login",
       failureFlash: true
-    })
+    }),
+    async (req, res, next) => {
+      req.session.save(err => {
+        if (err) throw err;
+        console.log("씨발아");
+        res.redirect("/");
+      });
+    }
   );
   return router;
 };
