@@ -72,38 +72,49 @@ function _updateBtnClickHandler(e) {
 /* Edit Comment Button Click Handler */
 function _editBtnClickHandler(e) {
   let commentItem = e.target.parentElement.parentElement.parentElement;
-  console.log(commentItem);
+  let commentId = commentItem.id.split("-")[1];
 }
 /* Delete Comment Button Click Handler */
 function _delBtnClickHandler(e) {
-  let commentItem = e.target.parentElement.parentElement.parentElement;
-  const xhr = new XMLHttpRequest();
-  const url = `http://localhost:3000/comments/${commentItem.id}`;
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState !== 4) return false;
-    if (xhr.status >= 200 && xhr.status < 300) {
-      console.log(xhr.response);
-    } else {
-      console.log("error");
-    }
-  };
-  xhr.open("DELETE", url, true);
-  xhr.responseType = "json";
-  xhr.send();
+  e.preventDefault();
+  let commentItem = e.currentTarget.parentElement.parentElement.parentElement;
+  let commentId = commentItem.id.split("-")[1];
+  _isMyComment(commentId)
+    .then(function(result) {
+      if (result) {
+        if (confirm("삭제하시겠습니까?")) {
+          _deleteComment(commentId).then(function(result) {
+            if (result) {
+              commentItem.remove();
+            } else {
+              alert("삭제 실패");
+            }
+            return false;
+          });
+        }
+      } else {
+        alert("본인이 작성한 글만 삭제 가능");
+        return false;
+      }
+    })
+    .catch(function(err) {
+      console.error(err);
+      return false;
+    });
 }
 /* Like Comment Button Click Handler */
 function _likeBtnClickHandler(e) {
-  let commentItem = e.target.parentElement.parentElement.parentElement.parentElement;
+  let commentItem = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
   console.log(commentItem);
 }
 /* UnLike Comment Button Click Handler */
 function _unLikeBtnClickHandler(e) {
-  let commentItem = e.target.parentElement.parentElement.parentElement.parentElement;
+  let commentItem = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
   console.log(commentItem);
 }
 /* Reply Button Click Handler */
 function _replyBtnClickHandler(e) {
-  let commentItem = e.target.parentElement.parentElement.parentElement.parentElement;
+  let commentItem = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
   if (commentItem.classList.contains("on")) {
     commentItem.querySelector("form").remove();
     commentItem.classList.remove("on");
@@ -118,7 +129,7 @@ function _replyBtnClickHandler(e) {
 }
 /* Comment Submit Button Click Handler */
 function _commentSubmitBtnClickHandler(e) {
-  let commentItem = e.target.parentElement.parentElement.parentElement;
+  let commentItem = e.currentTarget.parentElement.parentElement.parentElement;
   const boardId = document.querySelector("#boardId").value;
   const commentsText = commentItem.querySelector(".js__commentsText");
   let status, commentParentId;
@@ -130,7 +141,8 @@ function _commentSubmitBtnClickHandler(e) {
         let commentObj = JSON.parse(comments);
         commentsText.value = "";
         commentItem.insertAdjacentHTML("beforebegin", REPLY_TEMPLATE(commentObj));
-        _replyBtnListenerMapping();
+        // _replyBtnListenerMapping();
+        _allCommentItemsButtonsListenerMapping();
       })
       .catch(_errorHandler);
     return false;
@@ -157,7 +169,42 @@ function _commentSubmitBtnClickHandler(e) {
  *  Common functions & Handler mapping
  * =========================================================================
  */
-
+/* 게시글 삭제 함수(비동기) */
+function _deleteComment(commentId) {
+  const xhr = new XMLHttpRequest();
+  const url = "http://localhost:3000/comments/" + commentId;
+  return new Promise(function(resolve, reject) {
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState !== 4) return false;
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve(xhr.response);
+      } else {
+        reject("Connect to server failed");
+      }
+    };
+    xhr.open("DELETE", url, true);
+    xhr.responseType = "json";
+    xhr.send();
+  });
+}
+/* 게시글 본인확인 함수 (수정, 삭제 작업전) */
+function _isMyComment(commentId) {
+  const xhr = new XMLHttpRequest();
+  const url = "http://localhost:3000/comments/" + commentId;
+  return new Promise(function(resolve, reject) {
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState !== 4) return false;
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve(xhr.response);
+      } else {
+        reject("Connect to server failed");
+      }
+    };
+    xhr.open("GET", url, true);
+    xhr.responseType = "json";
+    xhr.send();
+  });
+}
 /* 댓글전송 후 값 받아옴 */
 function _commentSubmit(status, boardId, comments, commentParentId) {
   let params = {
@@ -210,7 +257,7 @@ function _commentListDrawing(data) {
   const commentForm = document.querySelector(".comment-form");
 
   let commentList = data.commentList;
-  commentList.forEach(function(comment) {
+  commentList.map(function(comment) {
     commentForm.insertAdjacentHTML("beforebegin", REPLY_TEMPLATE(comment));
   });
   _allCommentItemsButtonsListenerMapping();
@@ -220,7 +267,7 @@ function _commentListDrawing(data) {
 function _allCommentItemsButtonsListenerMapping() {
   let commentItems = document.querySelectorAll(".comment-item");
   commentItems.forEach(function(commentItem) {
-    console.log(commentItem);
+    // console.log(commentItem);
     commentItem.querySelector(".js__editBtn").addEventListener("click", _editBtnClickHandler);
     commentItem.querySelector(".js__delBtn").addEventListener("click", _delBtnClickHandler);
     commentItem.querySelector(".js__likeBtn").addEventListener("click", _likeBtnClickHandler);

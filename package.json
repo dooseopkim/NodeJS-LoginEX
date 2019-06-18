@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "pm2 start ./bin/www --watch --ignore-watch='session'",
+    "stop": "pm2 kill",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

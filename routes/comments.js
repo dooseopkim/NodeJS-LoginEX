@@ -74,14 +74,40 @@ router.post("/", async (req, res, next) => {
   console.log(resParams);
   res.json(resParams);
 });
-router.delete("/:commentId", async (req, res, next) => {
-  let delId = req.params.commentId;
-  resParams = {
-    delId: delId,
-    word: "hello"
-  };
-  res.json(resParams);
+/* 댓글 작성자 확인 */
+router.get("/:commentId", async (req, res, next) => {
+  let commentId = req.params.commentId;
+  console.log(commentId);
+  let userId = req.user.id;
+  let rows,
+    isMyComment = false;
+  try {
+    rows = await pool.query(queries.COMMENT_JOIN_USER_SELECT_ONE_USER_ID_WHERE_COMMENT_ID, [
+      commentId
+    ]);
+    console.log(rows);
+    if (rows[0].id === userId) isMyComment = true;
+  } catch (e) {
+    throw e;
+  }
+  res.json(isMyComment);
 });
+/* 댓글 삭제 */
+router.delete("/:commentId", async (req, res, next) => {
+  let commentId = req.params.commentId;
+  let rows,
+    isDeleted = false;
+  try {
+    rows = await pool.query(queries.COMMENT_UPDATE_DEL_FLAG_WHERE_ID, [commentId]);
+    if (rows.affectedRows === 1) {
+      isDeleted = true;
+    }
+  } catch (e) {
+    throw e;
+  }
+  res.json(isDeleted);
+});
+
 router.get("/b/:boardId", async (req, res, next) => {
   let boardId = req.params.boardId;
   let rows, commentList, resParams;
