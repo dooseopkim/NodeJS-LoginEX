@@ -99,7 +99,7 @@ router.get("/:boardId", async (req, res, next) => {
   }
   /* 2. 게시글 조회 */
   let boardId = req.params.boardId;
-  let rows, board;
+  let rows, board, commentList;
   let isMyPost = false;
   try {
     /* 게시글 DB 조회 */
@@ -123,7 +123,28 @@ router.get("/:boardId", async (req, res, next) => {
     if (user.id === board.user_id) {
       isMyPost = true;
     }
+    /* 댓글 불러오기 */
+    try {
+      rows = await pool.query(queries.COMMENT_JOIN_USER_SELECT_ALL_WHERE_BOARD_ID, [boardId]);
+      commentList = rows.map(row => {
+        let cDate = new Date(row.create_date);
+        let mDate = new Date(row.modify_date);
+        let t = row;
+        t.depth = row.group_seq === 0 ? " " : "depth";
+        t.modifyDate =
+          cDate.getTime() === mDate.getTime()
+            ? commonJS.getDateStringFull(mDate)
+            : `${commonJS.getDateStringFull(mDate)} [수정됨]`;
+        t.isMyComment = user.id === row.user_id;
+        return t;
+      });
+      console.log(commentList);
+      debugger;
+    } catch (e) {
+      throw e;
+    }
 
+    /* 응답 값 */
     let resParams = {
       boardId: board.board_id,
       title: board.title,
@@ -135,6 +156,7 @@ router.get("/:boardId", async (req, res, next) => {
       userId: board.user_id,
       username: board.username,
       createDate: commonJS.getDateStringFull(board.create_date),
+      commentList: JSON.stringify(commentList),
       isMyPost: isMyPost,
       isLogined: true,
       content: "bbsView" // 렌더링 페이지

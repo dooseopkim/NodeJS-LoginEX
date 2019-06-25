@@ -17,6 +17,7 @@ router.get("/", async (req, res, next) => {
   } else {
     resParams.isLogined = false;
   }
+
   res.render("common", resParams);
 });
 module.exports = router;

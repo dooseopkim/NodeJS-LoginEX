@@ -13,11 +13,11 @@ router.post("/", async (req, res, next) => {
   console.log(req.body);
   let status = req.body.status;
   let boardId = req.body.boardId;
-  let contents = commonJS.escape(req.body.comments);
+  let contents = commonJS.escape(req.body.commentsText);
   let userId = req.user.id;
 
   let rows, pCommentId, pComment, tComment, insertId, insertParams, resParams;
-  if (status === 0) {
+  if (status === "comment") {
     /* 첫 댓글 */
     insertParams = [boardId, contents, userId];
     try {
@@ -28,7 +28,8 @@ router.post("/", async (req, res, next) => {
       throw e;
     }
   } else {
-    pCommentId = req.body.commentParentId.split("-")[1];
+    /* 대댓글 */
+    pCommentId = req.body.parentId;
     try {
       // 기존 댓글들 sequence 수정
       rows = await pool.query(
@@ -65,7 +66,7 @@ router.post("/", async (req, res, next) => {
   resParams = {
     id: tComment.id,
     username: tComment.username,
-    modifyDate: tComment.modify_date,
+    modifyDate: commonJS.getDateStringFull(tComment.modify_date),
     contents: commonJS.unescape(tComment.contents),
     like: tComment.like,
     unlike: tComment.unlike,
@@ -74,10 +75,32 @@ router.post("/", async (req, res, next) => {
   console.log(resParams);
   res.json(resParams);
 });
+/* 댓글 수정 */
+router.put("/", async (req, res, next) => {
+  console.log(req.body);
+  let commentId = req.body.commentId;
+  let commentText = req.body.commentText;
+  let rows,
+    resParams = {
+      isUpdated: false
+    };
+  try {
+    rows = await pool.query(queries.COMMENT_UPDATE_CONTENTS_WHERE_ID, [commentText, commentId]);
+    if (rows.affectedRows === 1) {
+      rows = await pool.query(queries.COMMENT_JOIN_USER_SELECT_ONE_WHERE_COMMENT_ID, [commentId]);
+      resParams.isUpdated = true;
+      resParams.newComments = rows[0].contents;
+      resParams.modifyDate = `${rows[0].modify_date} [수정됨]`;
+    }
+  } catch (e) {
+    throw e;
+  }
+  res.json(resParams);
+});
 /* 댓글 작성자 확인 */
 router.get("/:commentId", async (req, res, next) => {
   let commentId = req.params.commentId;
-  console.log(commentId);
+  // console.log(commentId);
   let userId = req.user.id;
   let rows,
     isMyComment = false;
@@ -85,7 +108,7 @@ router.get("/:commentId", async (req, res, next) => {
     rows = await pool.query(queries.COMMENT_JOIN_USER_SELECT_ONE_USER_ID_WHERE_COMMENT_ID, [
       commentId
     ]);
-    console.log(rows);
+    // console.log(rows);
     if (rows[0].id === userId) isMyComment = true;
   } catch (e) {
     throw e;
@@ -119,7 +142,11 @@ router.get("/b/:boardId", async (req, res, next) => {
   }
   commentList.forEach(comment => {
     comment.depth = comment.group_seq === 0 ? " " : "depth";
-    comment.modifyDate = commonJS.getDateStringFull(comment.modify_date);
+    comment.modifyDate =
+      comment.create_date === comment.modify_date
+        ? commonJS.getDateStringFull(comment.modify_date)
+        : `${commonJS.getDateStringFull(comment.modify_date)} [수정됨]`;
+    // comment.modifyDate = commonJS.getDateStringFull(comment.modify_date);
   });
   resParams = {
     commentList: commentList

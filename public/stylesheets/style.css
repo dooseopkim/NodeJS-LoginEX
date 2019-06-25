@@ -100,8 +100,12 @@ table thead tr th:nth-child(5) {
 .comment-item.depth .comment-header {
   background: rgba(186, 220, 88, 0.6);
 }
-.comment-item form {
+.comment-item .c-reply-form {
   border-top: 1px dashed rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+}
+.comment-item .c-update-form {
+  /* border-top: 1px dashed rgba(0, 0, 0, 0.5); */
   padding: 1rem;
 }
 .comment-form {
@@ -133,6 +137,14 @@ table thead tr th:nth-child(5) {
 .comment-footer {
   padding: 0.5rem 1rem 1rem 1rem;
 }
+.comment-body.is-hide,
+.comment-footer.is-hide {
+  display: none;
+}
+.comment-body.is-visible,
+.comment-footer.is-visible {
+  display: block;
+}
 .comment-like,
 .comment-unLike,
 .comment-reply {
@@ -140,11 +152,14 @@ table thead tr th:nth-child(5) {
   outline: none;
   border: 0;
 }
-.comment-edit:hover,
+.comment-update:hover,
 .comment-del:hover,
 .comment-like:hover,
 .comment-unLike:hover,
 .comment-reply:hover {
   color: #636e72;
   transform: scale(1.1);
+}
+pre {
+  white-space: pre-wrap;
 }

@@ -86,3 +86,32 @@ mixin __boardListPagination(pageInfo,categoryId)
         //-    a.page-link(href='#') 3
         //- li.page-item
         //-   a.page-link(href='#') Next
+mixin __commentList(commentList)
+    -for(var i = 0; i < commentList.length; i++)
+        .comment-item(class=`${commentList[i].depth}` id=`c-${commentList[i].id}`)
+            .comment-header.d-flex.justify-content-between.align-items-center
+                .left
+                    h5.h5.mb-0.comment-title !{commentList[i].username}
+                    span.comment-date !{commentList[i].modifyDate}
+                .right
+                    if commentList[i].isMyComment
+                        button.d-inline-block.comment-update.js__commentUpdateBtn
+                            i.fas.fa-cog
+                        button.d-inline-block.comment-del.js__commentDeleteBtn
+                            i.fas.fa-times
+            .comment-body.is-visible
+                pre.comment-text !{commentList[i].contents}
+            .comment-footer.is-visible
+                ul.list-inline.d-sm-flex.my-0
+                    li.list-inline-item
+                        button.comment-like.js__commentLikeBtn
+                            i.fa.fa-thumbs-up
+                        span !{commentList[i].like}
+                    li.list-inline-item
+                        button.comment-unLike.js__commentUnLikeBtn
+                            i.fa.fa-thumbs-down.g-pos-rel.g-top-1.g-mr-3
+                        span !{commentList[i].unlike}
+                    li.list-inline-item.ml-auto
+                        button.comment-reply.js__commentReplyBtn
+                            i.fa.fa-reply.g-pos-rel.g-top-1.g-mr-3
+                            |  Reply
