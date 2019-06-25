@@ -11,6 +11,8 @@ const PUT_METHOD = "PUT";
 const DELETE_METHOD = "DELETE";
 
 const SERVER_FAIL_MESSAGE = "Connect to server failed";
+
+const boardId = document.getElementById("boardId").value;
 /* 대댓글 입력, 댓글 수정 폼 */
 const _replyFormTemplate = function(status) {
   // status = 'reply' 대댓글 입력 폼
@@ -167,6 +169,10 @@ const _boardUpdateBtnClickHandler = function(e) {
   e.preventDefault();
   const target = e.currentTarget;
   console.log(target);
+  if (confirm("글을 수정하시겠습니까?")) {
+    location.href = `/board/p/${boardId}`;
+  }
+  return false;
 };
 
 /* 댓글 입력 */
