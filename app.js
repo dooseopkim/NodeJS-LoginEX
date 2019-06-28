@@ -9,6 +9,8 @@ const logger = require("morgan");
 const favicon = require("serve-favicon");
 const createError = require("http-errors");
 
+const pool = require("./lib/db");
+const queries = require("./lib/queries");
 const app = express();
 
 // app.all("/*", function(req, res, next) {
@@ -55,6 +57,18 @@ const boardsRouter = require("./routes/boards");
 const imagesRouter = require("./routes/images");
 const commentsRouter = require("./routes/comments");
 
+app.get("/test", (req, res, next) => {
+  let rows = pool.query(queries.TEST_QUERY);
+  rows
+    .then(results => {
+      console.log(results);
+    })
+    .catch(err => {
+      if (err) console.error(err);
+    });
+
+  res.send("hello");
+});
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/signin", signinRouter);

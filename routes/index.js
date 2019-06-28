@@ -19,5 +19,6 @@ router.get("/", async (req, res, next) => {
   }
 
   res.render("common", resParams);
+  return false;
 });
 module.exports = router;
