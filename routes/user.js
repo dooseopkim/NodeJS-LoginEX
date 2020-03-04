@@ -39,22 +39,12 @@ module.exports = passport => {
         res.redirect("/");
       });
     }
-    // async (req, res, next) => {
-    //   req.session.save(err => {
-    //     if (err) throw err;
-    //     console.log("씨발아");
-    //     res.redirect("/");
-    //   });
-    // }
   );
 
   router.get("/logout", (req, res) => {
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", req.session);
     req.logout();
     req.session.save(err => {
       if (err) throw err;
-      console.log("개씨발아");
-      console.log("^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%", req.session);
       res.redirect("/");
       return false;
     });
@@ -106,11 +96,8 @@ module.exports = passport => {
       failureFlash: true
     }),
     async (req, res, next) => {
-      console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", req.session);
       req.session.save(err => {
         if (err) throw err;
-        console.log("씨발아");
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", req.session);
         res.redirect("/");
       });
     }
@@ -131,7 +118,6 @@ module.exports = passport => {
     async (req, res, next) => {
       req.session.save(err => {
         if (err) throw err;
-        console.log("씨발아");
         res.redirect("/");
       });
     }
@@ -150,7 +136,6 @@ module.exports = passport => {
     async (req, res, next) => {
       req.session.save(err => {
         if (err) throw err;
-        console.log("씨발아");
         res.redirect("/");
       });
     }
@@ -169,7 +154,6 @@ module.exports = passport => {
     async (req, res, next) => {
       req.session.save(err => {
         if (err) throw err;
-        console.log("씨발아");
         res.redirect("/");
       });
     }
@@ -188,7 +172,6 @@ module.exports = passport => {
     async (req, res, next) => {
       req.session.save(err => {
         if (err) throw err;
-        console.log("씨발아");
         res.redirect("/");
       });
     }
